@@ -17,7 +17,7 @@ GameObject:
   - component: {fileID: 2270641146329515942}
   m_Layer: 8
   m_Name: Ruby
-  m_TagString: Untagged
+  m_TagString: RubyController
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -105,6 +105,17 @@ MonoBehaviour:
   speed: 3
   timeInvincible: 2
   projectilePrefab: {fileID: 4786367652333323996, guid: 12356fb549dc3524481c083ad930ef44, type: 3}
+  throwClip: {fileID: 8300000, guid: 437df69063980244484e7e37c80b859a, type: 3}
+  healthEffect: {fileID: 5052498599573696154, guid: 80ea483a014513e40b7bc9faf1fdab7a, type: 3}
+  hitEffect: {fileID: 1054806823737972818, guid: 2f97bbe24d3858445949cc69ac97375d, type: 3}
+  scoreText: {fileID: 0}
+  winLoseText: {fileID: 0}
+  victoryMusic: {fileID: 8300000, guid: fe2cac75d8a56db45ae47ee2f67ef205, type: 3}
+  gameOverMusic: {fileID: 8300000, guid: 948bb3d73049b4a48ae0d3a45ae9bfd1, type: 3}
+  winLoseObject: {fileID: 0}
+  backgroundMusic: {fileID: 0}
+  cogs: 4
+  cogCounter: {fileID: 0}
 --- !u!50 &4747786504069413896
 Rigidbody2D:
   serializedVersion: 4

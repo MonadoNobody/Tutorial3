@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
+using UnityEngine.SceneManagement;
 
 public class RubyController : MonoBehaviour
 {
@@ -17,6 +19,21 @@ public class RubyController : MonoBehaviour
     public GameObject projectilePrefab;
     AudioSource audioSource;
     public AudioClip throwClip;
+    public GameObject healthEffect;
+    public GameObject hitEffect;
+    int score;
+    public TextMeshProUGUI scoreText;
+    public TextMeshProUGUI winLoseText;
+    bool gameOver;
+    public AudioClip victoryMusic;
+    public AudioClip gameOverMusic;
+    public GameObject winLoseObject;
+    public AudioSource backgroundMusic;
+    bool stageOneVictory;
+    public int level;
+    public int cogs = 4;
+    public TextMeshProUGUI cogCounter;
+    
 
     Rigidbody2D rigidbody2d;
     float horizontal;
@@ -29,11 +46,30 @@ public class RubyController : MonoBehaviour
 
         currentHealth = maxHealth;
         audioSource = GetComponent<AudioSource>();
+        winLoseObject.SetActive(false);
         
     }
     public void PlaySound(AudioClip clip)
     {
         audioSource.PlayOneShot(clip);
+    }
+    public void scoreUP()
+    {
+        score += 1;
+        scoreText.text = "Fixed Robots" + score.ToString() + "/ 4";
+        if (score == 4 && level == 1)
+        {
+            stageOneVictory = true;
+            winLoseText.text = "Talk to Jambi to progress to the next level";
+            winLoseObject.SetActive(true);
+        }
+        if (score == 4 && level == 2)
+        {
+            backgroundMusic.Stop();
+            PlaySound(victoryMusic);
+            winLoseText.text = "You win a Ruby's Adventure created by Alexander Robinson";
+            winLoseObject.SetActive(true);
+        }
     }
 
     // Update is called once per frame
@@ -41,6 +77,14 @@ public class RubyController : MonoBehaviour
     {
         horizontal = Input.GetAxis("Horizontal");
         vertical = Input.GetAxis("Vertical");
+        if (Input.GetKey(KeyCode.R))
+            {
+                if (gameOver == true)
+                {
+                    SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+
+                }
+            }
 
         Vector2 move = new Vector2(horizontal, vertical);
 
@@ -62,8 +106,17 @@ public class RubyController : MonoBehaviour
         }
         if(Input.GetKeyDown(KeyCode.C))
         {
+            if (cogs > 0)
+            {
             Launch();
             PlaySound(throwClip);
+            cogs -= 1;
+            cogCounter.text = "Cogs: " + cogs.ToString();
+            }
+            else 
+            {
+                return;
+            }
         }
         if (Input.GetKeyDown(KeyCode.X))
         {
@@ -73,6 +126,13 @@ public class RubyController : MonoBehaviour
                 NonPlayerCharacter character = hit.collider.GetComponent<NonPlayerCharacter>();
                 if (character != null)
                 {
+                    if (stageOneVictory == true)
+                    {
+                        //put Ruby at 46.36, -8.36
+                        transform.position = new Vector2(46.36f, -8.36f);
+                        SceneManager.LoadScene("Level2");
+                        level = 2;
+                    }
                     character.DisplayDialog();
                 }
             }
@@ -98,9 +158,23 @@ public class RubyController : MonoBehaviour
             }
             isInvincible = true;
             invincibleTimer = timeInvincible;
+            GameObject hitVFX = Instantiate(hitEffect, rigidbody2d.position + Vector2.up * 0.5f, Quaternion.identity);
+        }
+        if (amount > 0)
+        {
+            GameObject healVFX = Instantiate(healthEffect, rigidbody2d.position + Vector2.up * 0.5f, Quaternion.identity);
         }
         currentHealth = Mathf.Clamp(currentHealth + amount, 0, maxHealth);
         UIHealthBar.instance.SetValue(currentHealth / (float)maxHealth);
+        if (currentHealth <= 0)
+        {
+            backgroundMusic.Stop();
+            winLoseObject.SetActive(true);
+            gameOver = true;
+            speed = 0;
+            PlaySound(gameOverMusic);
+        }
+        
     }
     void Launch()
     {
@@ -109,4 +183,14 @@ public class RubyController : MonoBehaviour
         projectile.Launch(lookDirection, 360);
         animator.SetTrigger("Launch");
     }
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if(other.gameObject.CompareTag("Ammo"))
+        {
+            cogs += 4;
+            cogCounter.text = "Cogs: " + cogs.ToString();
+            other.gameObject.SetActive(false);
+        }
+    }
+    
 }

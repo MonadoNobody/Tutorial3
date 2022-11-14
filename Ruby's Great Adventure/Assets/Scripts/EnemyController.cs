@@ -14,13 +14,21 @@ public class EnemyController : MonoBehaviour
     bool broken = true;
     public ParticleSystem smokeEffect;
     public AudioClip hitClip;
-
+    public int damage = 1;
+    private RubyController rubyController;
     // Start is called before the first frame update
     void Start()
     {
         rigidbody2d = GetComponent<Rigidbody2D>();
         timer = changeTime;
         animator = GetComponent<Animator>();   
+        GameObject rubyControllerObject = GameObject.FindWithTag("RubyController");
+         if (rubyControllerObject != null)
+
+        {
+
+            rubyController = rubyControllerObject.GetComponent<RubyController>(); //and this line of code finds the rubyController and then stores it in a variable
+        }
     }
     
     void Update()
@@ -69,18 +77,20 @@ public class EnemyController : MonoBehaviour
         RubyController player = other.gameObject.GetComponent<RubyController>();
         if (player != null)
         {
-            player.ChangeHealth(-1);
+            player.ChangeHealth(damage * -1);
             player.PlaySound(hitClip);
 
         }
     }
     public void Fix()
     {
+
         broken = false;
+        rubyController.scoreUP();
         rigidbody2d.simulated = false;
         animator.SetTrigger("Fixed");
-        smokeEffect.Stop();
         
+        smokeEffect.Stop();
     }
 
 }
