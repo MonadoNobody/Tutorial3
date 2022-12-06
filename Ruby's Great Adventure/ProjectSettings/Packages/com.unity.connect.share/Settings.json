@@ -21,7 +21,7 @@
             {
                 "type": "System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
                 "key": "buildOutputDirList",
-                "value": "{\"m_Value\":\"C:/Users/Owner/Desktop/UCF Work/DIG 3480/Tutorial 3/Tutorial 3 Repository/Tutorial3/Ruby's Great Adventure/WebGL Builds;;;;;;;;;\"}"
+                "value": "{\"m_Value\":\"C:/Users/Owner/Desktop/UCF Work/DIG 3480/Tutorial 3/Tutorial 3 Repository/Tutorial3/Ruby's Great Adventure/WebGL Builds/Build/Build;;;;;;;;;\"}"
             }
         ]
     }

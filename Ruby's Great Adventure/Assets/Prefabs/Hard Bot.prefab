@@ -155,6 +155,7 @@ MonoBehaviour:
   smokeEffect: {fileID: 7372436581769860259}
   hitClip: {fileID: 8300000, guid: a75c652b7e267cf42b2d36c36de1c39f, type: 3}
   damage: 2
+  robotHealth: 1
 --- !u!95 &5811449527330185991
 Animator:
   serializedVersion: 4

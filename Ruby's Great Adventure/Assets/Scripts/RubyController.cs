@@ -33,6 +33,14 @@ public class RubyController : MonoBehaviour
     public int level;
     public int cogs = 4;
     public TextMeshProUGUI cogCounter;
+    bool stageTwoVictory;
+    bool stageThreeVictory;
+    public bool isBoosted;
+    public float boostTime = 5.0f;
+    float boostedTimer;
+    public int boostEffect = 2;
+    bool boosted;
+    public AudioClip ammoSFX;
     
 
     Rigidbody2D rigidbody2d;
@@ -65,10 +73,17 @@ public class RubyController : MonoBehaviour
         }
         if (score == 4 && level == 2)
         {
+            winLoseText.text = "Talk to the dog to proceed to the boss level";
+            winLoseObject.SetActive(true);
+            stageTwoVictory = true;
+        }
+        if(score == 4 && level == 3)
+        {
             backgroundMusic.Stop();
             PlaySound(victoryMusic);
-            winLoseText.text = "You win a Ruby's Adventure created by Alexander Robinson";
+            winLoseText.text = "YOU WIN!!! A Game by Alexander Robinson, Press R to Restart.";
             winLoseObject.SetActive(true);
+            stageThreeVictory = true;
         }
     }
 
@@ -83,6 +98,11 @@ public class RubyController : MonoBehaviour
                 {
                     SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
 
+                }
+                if (stageThreeVictory == true)
+                {
+                    SceneManager.LoadScene("MainScene");
+                    stageThreeVictory = false;
                 }
             }
 
@@ -102,6 +122,19 @@ public class RubyController : MonoBehaviour
             if(invincibleTimer < 0)
             {
                 isInvincible = false;
+            }
+        }
+        if (isBoosted)
+        {
+            boostedTimer -= Time.deltaTime;
+            if(boostedTimer <0)
+            {
+                if (boosted == true)
+                {
+                    speed = speed / boostEffect;
+                    boosted = false;
+                }
+                isBoosted = false;
             }
         }
         if(Input.GetKeyDown(KeyCode.C))
@@ -132,6 +165,13 @@ public class RubyController : MonoBehaviour
                         transform.position = new Vector2(46.36f, -8.36f);
                         SceneManager.LoadScene("Level2");
                         level = 2;
+                        stageOneVictory = false;
+                    }
+                    if (stageTwoVictory == true)
+                    {
+                        SceneManager.LoadScene("BossLevel");
+                        level = 3;
+                        stageTwoVictory = false;
                     }
                     character.DisplayDialog();
                 }
@@ -190,7 +230,21 @@ public class RubyController : MonoBehaviour
             cogs += 4;
             cogCounter.text = "Cogs: " + cogs.ToString();
             other.gameObject.SetActive(false);
+            PlaySound(ammoSFX);
         }
     }
-    
+    public void SpeedPickup()
+    {
+                    if(isBoosted)
+            {
+                return;
+            }
+                    if(isBoosted == false)
+                    {
+                        speed = speed * boostEffect;
+                        boosted =true;
+                    }
+            isBoosted = true;
+            boostedTimer = boostTime;
+    }
 }

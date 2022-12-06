@@ -16,6 +16,7 @@ public class EnemyController : MonoBehaviour
     public AudioClip hitClip;
     public int damage = 1;
     private RubyController rubyController;
+    public int robotHealth;
     // Start is called before the first frame update
     void Start()
     {
@@ -84,13 +85,15 @@ public class EnemyController : MonoBehaviour
     }
     public void Fix()
     {
-
+        robotHealth = robotHealth - 1;
+        if(robotHealth == 0){
         broken = false;
         rubyController.scoreUP();
         rigidbody2d.simulated = false;
         animator.SetTrigger("Fixed");
         
         smokeEffect.Stop();
+        }
     }
 
 }

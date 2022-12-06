@@ -6,6 +6,7 @@ TagManager:
   tags:
   - RubyController
   - Ammo
+  - ResetNPC
   layers:
   - Default
   - TransparentFX
@@ -20,7 +21,7 @@ TagManager:
   - Decoration
   - Confiner
   - NPC
-  - 
+  - ResetNPC
   - 
   - 
   - 

@@ -114,8 +114,13 @@ MonoBehaviour:
   gameOverMusic: {fileID: 8300000, guid: 948bb3d73049b4a48ae0d3a45ae9bfd1, type: 3}
   winLoseObject: {fileID: 0}
   backgroundMusic: {fileID: 0}
+  level: 1
   cogs: 4
   cogCounter: {fileID: 0}
+  isBoosted: 0
+  boostTime: 5
+  boostEffect: 2
+  ammoSFX: {fileID: 8300000, guid: 7d66d2d06d2d7a940991210563247e3a, type: 3}
 --- !u!50 &4747786504069413896
 Rigidbody2D:
   serializedVersion: 4

@@ -153,8 +153,9 @@ MonoBehaviour:
   vertical: 1
   changeTime: 2
   smokeEffect: {fileID: 7811373465195305436}
-  hitEffect: {fileID: 9095718078527762747, guid: 2f97bbe24d3858445949cc69ac97375d, type: 3}
   hitClip: {fileID: 8300000, guid: a75c652b7e267cf42b2d36c36de1c39f, type: 3}
+  damage: 1
+  robotHealth: 1
 --- !u!95 &6526226356034645624
 Animator:
   serializedVersion: 4
